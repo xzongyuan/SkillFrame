@@ -1,0 +1,17 @@
+# 块大小（字符数）
+chunk_size: 5000
+
+# 最大重试次数
+max_retries: 3
+
+# 指数退避延迟（秒）
+retry_delay: [1, 2, 4]
+
+# 上传后自动验证
+verify_after_upload: true
+
+# API 请求超时（秒）
+request_timeout: 30
+
+# 验证时预览内容长度
+verify_preview_length: 200

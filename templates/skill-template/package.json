@@ -1,0 +1,12 @@
+{
+  "name": "skill-template",
+  "version": "1.0.0",
+  "description": "Skill creation template",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node tests/test-1.js"
+  },
+  "keywords": ["openclaw", "skill", "template"],
+  "author": "OpenClaw",
+  "license": "MIT"
+}

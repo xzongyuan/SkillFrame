@@ -1,0 +1,155 @@
+{
+  "version": "1.0.0",
+  "description": "Workspace目录结构规范",
+  
+  "structure": {
+    "projects": {
+      "path": "projects/",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "项目代码目录",
+      "required_files": ["README.md"],
+      "allowed_content": ["src", "dist", "docs", "README.md", "package.json", "tsconfig.json"]
+    },
+    "agents": {
+      "path": "agents/",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Agent配置目录",
+      "required_files": ["SOUL.md"],
+      "allowed_content": ["SOUL.md", "PROJECTS.md", "TODO.md"],
+      "max_size_mb": 10
+    },
+    "data": {
+      "logs": {
+        "path": "data/logs/",
+        "description": "日志数据",
+        "retention_days": 90
+      },
+      "memory": {
+        "path": "data/memory/xiaoyi/",
+        "description": "记忆数据",
+        "owner": "xiaoyi"
+      },
+      "backup": {
+        "path": "data/backup/",
+        "description": "备份数据",
+        "retention_days": 30
+      }
+    },
+    "skills": {
+      "path": "skills/",
+      "description": "已安装Skills"
+    },
+    "docs": {
+      "path": "docs/",
+      "description": "文档目录"
+    },
+    "scripts": {
+      "path": "scripts/",
+      "description": "脚本目录"
+    }
+  },
+  
+  "protected_dirs": [
+    ".git",
+    ".clawhub",
+    "node_modules",
+    "dist",
+    "__pycache__",
+    ".pytest_cache"
+  ],
+  
+  "migration_rules": [
+    {
+      "id": "project-root-to-projects",
+      "name": "根目录项目迁移",
+      "description": "将根目录下的项目迁移到projects/",
+      "condition": {
+        "location": "root",
+        "has_any_file": ["package.json", "src/", "main.py", "index.js"],
+        "not_in": ["projects/", "agents/", "data/", "docs/", "scripts/", "skills/", "config/", "knowledge/", "export/", "public/"]
+      },
+      "action": {
+        "type": "move",
+        "target": "projects/{name}/"
+      },
+      "priority": 1
+    },
+    {
+      "id": "agent-code-to-project",
+      "name": "Agent代码迁移",
+      "description": "将Agent目录下的代码迁移到projects/",
+      "condition": {
+        "location": "agents/*",
+        "has_any_file": ["*.js", "*.py", "src/", "main.*"],
+        "not_has_file": ["SOUL.md"]
+      },
+      "action": {
+        "type": "move",
+        "target": "projects/{agent-name}-{component}/"
+      },
+      "priority": 2
+    },
+    {
+      "id": "archive-old-agent",
+      "name": "归档旧Agent",
+      "description": "归档长时间未使用的Agent",
+      "condition": {
+        "location": "agents/*",
+        "not_modified_days": 30,
+        "not_has_file": ["ACTIVE"]
+      },
+      "action": {
+        "type": "archive",
+        "target": "agents/{name}-archived-{date}/"
+      },
+      "priority": 3
+    }
+  ],
+  
+  "md_update_rules": {
+    "agents/*/SOUL.md": {
+      "required_sections": ["工作目录"],
+      "optional_sections": ["工作原则", "协作关系"],
+      "section_templates": {
+        "工作目录": "templates/agent-workdir-section.md",
+        "工作原则": "templates/agent-principles-section.md"
+      }
+    }
+  },
+  
+  "path_update_rules": {
+    "*.sh": {
+      "description": "Shell脚本",
+      "string_types": ["double_quote", "single_quote"],
+      "exclude_patterns": ["#.*", "echo.*", "printf.*"]
+    },
+    "*.py": {
+      "description": "Python脚本",
+      "string_types": ["double_quote", "single_quote", "raw"],
+      "exclude_variables": ["__file__", "__name__", "__doc__"]
+    },
+    "*.js": {
+      "description": "JavaScript脚本",
+      "string_types": ["double_quote", "single_quote", "template"],
+      "exclude_patterns": ["console\\.log", "//.*", "/\\*.*\\*/"]
+    },
+    "*.ts": {
+      "description": "TypeScript脚本",
+      "string_types": ["double_quote", "single_quote", "template"],
+      "exclude_patterns": ["console\\.log", "//.*"]
+    }
+  },
+  
+  "verification": {
+    "content_check": true,
+    "checksum_algorithm": "sha256",
+    "syntax_check": true,
+    "git_check": true
+  },
+  
+  "backup": {
+    "location": "data/backup/refactor-{timestamp}/",
+    "retention_days": 30,
+    "include_git": false
+  }
+}

@@ -1,0 +1,36 @@
+# 记忆系统配置
+
+storage:
+  base_path: "./data/memory"
+  
+categories:
+  short:
+    name: "短期记忆"
+    ttl_days: 1
+    description: "24小时内的临时记忆"
+  medium:
+    name: "中期记忆"
+    ttl_days: 7
+    description: "7天内的近期记忆"
+  long:
+    name: "长期记忆"
+    ttl_days: 30
+    description: "30天内的重要记忆"
+  state:
+    name: "状态记忆"
+    ttl_days: -1
+    description: "永久保存的状态信息"
+
+retrieval:
+  max_results: 10
+  keyword_match_threshold: 0.5
+  
+agents:
+  - xiaozhi
+  - xiaoyi
+  - xiaos
+  
+priorities:
+  high: 3
+  medium: 2
+  low: 1
