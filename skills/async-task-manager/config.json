@@ -1,0 +1,7 @@
+{
+  "default_notify_interval": 30,
+  "task_storage_path": "/home/admin/.openclaw/skills/async-task-manager/tasks",
+  "notification_channel": "feishu",
+  "max_concurrent_tasks": 10,
+  "log_retention_days": 7
+}
