@@ -46,16 +46,43 @@ tags: [template, skill-development]
 }
 ```
 
-## 使用示例
+## 快速开始
 
-### 示例1: 创建新Skill
+### 方式1: 使用SkillFrame仓库（推荐）
 
 ```bash
-# 复制模板
+# 1. 克隆SkillFrame仓库
+git clone https://github.com/xzongyuan/SkillFrame.git
+cd SkillFrame
+
+# 2. 基于模板创建新Skill
 cp -r templates/skill-template skills/my-skill
 
-# 编辑SKILL.md
+# 3. 编辑SKILL.md定义你的Skill
 vim skills/my-skill/SKILL.md
+
+# 4. 实现核心逻辑
+vim skills/my-skill/src/index.js
+
+# 5. 同步到OpenClaw
+./scripts/skill-sync.sh
+```
+
+### 方式2: 手动创建
+
+```bash
+# 复制模板到OpenClaw skills目录
+cp -r templates/skill-template ~/.openclaw/workspace/skills/my-skill
+
+# 编辑并开发
+vim ~/.openclaw/workspace/skills/my-skill/SKILL.md
+```
+
+### 方式3: 通过对话创建
+
+```
+你: 帮我创建一个名为xxx的Skill，用于...
+→ 我会基于模板自动创建并配置
 ```
 
 ## 设计决策

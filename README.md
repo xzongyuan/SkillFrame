@@ -33,6 +33,48 @@ SkillFrame/
 
 ---
 
+## 快速开始
+
+### 1. 克隆仓库
+
+```bash
+git clone https://github.com/xzongyuan/SkillFrame.git
+cd SkillFrame
+```
+
+### 2. 创建新Skill
+
+```bash
+# 基于模板创建
+cp -r templates/skill-template skills/my-skill
+
+# 编辑SKILL.md定义功能
+vim skills/my-skill/SKILL.md
+
+# 实现核心逻辑
+vim skills/my-skill/src/index.js
+```
+
+### 3. 同步到OpenClaw
+
+```bash
+# 方式1: 使用同步脚本
+./scripts/skill-sync.sh
+
+# 方式2: 手动复制
+cp -r skills/my-skill ~/.openclaw/workspace/skills/
+```
+
+### 完整开发流程
+
+```
+克隆仓库 → 创建Skill → 开发实现 → 测试验证 → 提交代码 → 同步使用
+    ↑                                                    ↓
+    └──────────────── 持续迭代更新 ←───────────────────────┘
+```
+
+---
+
 ## Skill清单
 
 ### Agent相关 (4个)
